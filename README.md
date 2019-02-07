@@ -1,6 +1,6 @@
 # Jeopardy!
 
-Try it out!
+Click here to play Jeopardy: https://jessicalyn.github.io/jeopardy/
 
 ## Goals
 This is the first paired project for Module 2 at Turing School. The goal was to learn about object oriented programing, webpack, test driven development, and implement what we learned by creating a quiz game based on Jeopardy.
