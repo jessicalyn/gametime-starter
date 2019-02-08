@@ -4,15 +4,13 @@ import $ from 'jquery';
 const domUpdates = {
 
   labelCategories([roundCategories]) {
-    //in domupdates, make them real english words
-    //add forEach here to iterate through category list to append names
-    let $category0 = roundCategories[0];
+    let $category0 = roundCategories[0]
     $('#category-0').text($category0);
-    let $category1 = roundCategories[1];
+    let $category1 = roundCategories[1]
     $('#category-1').text($category1);
-    let $category2 = roundCategories[2];
+    let $category2 = roundCategories[2]
     $('#category-2').text($category2);
-    let $category3 = roundCategories[3];
+    let $category3 = roundCategories[3]
     $('#category-3').text($category3);
   },
 
@@ -117,7 +115,14 @@ const domUpdates = {
 
   reassignPointValue(wagerAmount) {
     $('#displayPointVal').text(`For $${wagerAmount}`);
-  }
+  },
+
+  roundTwoDisplay() {
+    $('.round-two').show();
+    $('.round-two').fadeOut(3000, function() {
+      $(this).hide();
+    })
+  }  
 }
 
 
