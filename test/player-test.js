@@ -5,14 +5,14 @@ import spies from 'chai-spies';
 chai.use(spies);
 
 import Player from '../src/player.js';
-// import domUpdates from '../src/domUpdates.js';
+import domUpdates from '../src/domUpdates.js';
 
 describe('Player', function() {
   var player;
 
   beforeEach(function() {
-    // player = new Player();
-    chai.spy.on(domUpdates, 'updateScore', returns => true);
+    player = new Player("Archie", 0);
+    chai.spy.on(domUpdates, 'updatePlayerScore', returns => true);
   });
 
   afterEach(function() {
@@ -24,20 +24,15 @@ describe('Player', function() {
   });
 
   it('should have properties', function() {
-    player = new Player("Archie", 0, 0, 1, false);
     expect(player.name).to.equal("Archie");
     expect(player.score).to.equal(0);
-    // expect(player.wager).to.equal(0);
-    // expect(player.playerNum).to.equal(1);
-    // expect(player.active).to.equal(false);
   });
 
   it('should update their score', function() {
-    player = new Player("Archie", 0, 0);
     expect(player.score).to.equal(0);
-    player.updateScore('correct', 300, {name: 'Archie', score: 0 }, 0 );
+    player.updateScore('correct', 300, player, 0);
     expect(player.score).to.equal(300);
-    player.updateScore('incorrect', -200);
+    player.updateScore('wrong', 200, player, 0);
     expect(player.score).to.equal(100);
   })
 

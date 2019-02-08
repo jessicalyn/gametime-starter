@@ -1,7 +1,7 @@
 import domUpdates from './domUpdates.js'
 
 class Player {
-  constructor(name, score, wager) {
+  constructor(name, score) {
     this.name = name;
     this.score = score;
   }
@@ -15,20 +15,7 @@ class Player {
     }
     domUpdates.updatePlayerScore(this.activePlayer, score, activePlayerIndex);
   }
-
-  wagerRange() {
-  }
 }
 
 
 export default Player;
-
-
-// if (answer === "correct") {
-//       activePlayer.score += score;
-//     } else {
-//       activePlayer.score -= score;
-//     }
-//     domUpdates.updatePlayerScore(this.activePlayer, activePlayer.score);
-//     this.turnCount++;
-//     this.checkTurnCount();

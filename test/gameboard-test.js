@@ -7,13 +7,17 @@ chai.use(spies);
 import Gameboard from '../src/gameboard.js';
 import domUpdates from '../src/domUpdates.js';
 
-chai.spy.on(domUpdates, ['startGame', 'assignCategories'], () => true);
 
 describe('Gameboard', function() {
   let game;
 
   beforeEach(function() {
+    chai.spy.on(domUpdates, ['startGame', 'assignCategories', 'activePlayerHighlight', 'labelCategories', 'changePlayerNames'], () => true);
     game = new Gameboard();
+  });
+
+  afterEach(function() {
+    chai.spy.restore(domUpdates);
   });
 
   it('should instantiate a new game', function() {
@@ -38,7 +42,7 @@ describe('Gameboard', function() {
     expect(game.doubleCount).to.have.length(0);
     game.startGame();
     expect(game.doubleCount).to.have.length(1);
-  });
+  });  //Will not work without dailydouble functionality
 
   it('should create an array with all clue objects, including category name', function() {
     expect(game.cluesWithCategories).to.have.length(0);
@@ -62,9 +66,12 @@ describe('Gameboard', function() {
     expect(game.finalRoundClue).to.have.length(4);
   });
 
-  it('should instantiate 3 players', function() {
+  it('should create an array of the instantiated players', function() {
     expect(game.playersArray).to.deep.equal([]);
-    game.createPlayers();
+    player1 = { name: 'Joe' };
+    player2 = { name: 'Archie' };
+    player3 = { name: 'Duder' };
+    game.createPlayersArray(game, player1, player2, player3);
     expect(game.playersArray).to.have.length(3);
   });
 
