@@ -1,6 +1,5 @@
 import './css/base.css';
 import Clue from './clue.js';
-import Dailydouble from './dailyDouble.js';
 import data from './data.js';
 import domUpdates from './domUpdates.js';
 import Gameboard from './gameboard.js';
