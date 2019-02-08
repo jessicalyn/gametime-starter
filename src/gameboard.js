@@ -132,7 +132,6 @@ class Gameboard {
     }
   }
 
-
   assignCategories() {    
     function randomize(array) {
       array = array.sort(() => 0.5 - Math.random());
