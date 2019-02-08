@@ -4,7 +4,6 @@ import domUpdates from './domUpdates.js';
 
 //get rid of these
 import Clue from './clue.js';
-import Player from './player.js';
 // import Dailydouble from './dailyDouble.js'
 //*****************
 
@@ -68,10 +67,7 @@ class Gameboard {
     domUpdates.activePlayerHighlight(this.activePlayer);
   }
 
-  createPlayers(game, playerName1, playerName2, playerName3) {
-    let player1 = new Player(playerName1, 0, 0, 1, true);
-    let player2 = new Player(playerName2, 0, 0, 2, false);
-    let player3 = new Player(playerName3, 0, 0, 3, false);
+  createPlayersArray(game, player1, player2, player3) {
     game.playersArray.push(player1);
     game.playersArray.push(player2);
     game.playersArray.push(player3);
