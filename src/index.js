@@ -7,7 +7,6 @@ import Gameboard from './gameboard.js';
 import Player from './player.js';
 import $ from 'jquery';
 
-
 let game = new Gameboard();
 
 $('#playBtn').on('click', function(e) {
@@ -16,6 +15,11 @@ $('#playBtn').on('click', function(e) {
   pullNames();
   domUpdates.removeStartScreen();
 })
+
+$('.no-submit').on('submit', function(e) {
+  search($('no-reload'));
+  e.preventDefault();
+}, false);
 
 $('body').on('click', function(e) {
   e.preventDefault;

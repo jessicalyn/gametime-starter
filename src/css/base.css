@@ -283,33 +283,6 @@ table th {
   margin-bottom: 30px;
 }
 
-/** Final Jeopardy! pop up **/
-
-.final-jeopardy-wager {
-  display: none;
-  z-index: 1;
-  position: absolute;
-  padding-top: 100px;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0,0,0,0.4);
-}
-
-.final-jeopardy-wager-content {
-  align-items: center;
-  background-color: beige;
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-  margin: auto;
-  width: 70%;
-}
-
-#displayPointVal {
-  font-size: 65%;
-}
-
 /** Dom classes **/
 
 .add-margin-top {
