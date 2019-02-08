@@ -1,5 +1,5 @@
 import Gameboard from './gameboard.js';
-import './css/base.css';
+// import './css/base.css';
 import $ from 'jquery';
 
 const domUpdates = {
@@ -127,15 +127,10 @@ const domUpdates = {
   reassignPointValue(wagerAmount) {
     let $clueValue = $('#displayPointVal');
     $clueValue.text(`For $${wagerAmount}`);
-  }
+  },
   
 }
 
-  let $resetButton = $('#reset-button');
-
-  $resetButton.on('click', function() {
-    location.reload();
-  })
 
 
 export default domUpdates;

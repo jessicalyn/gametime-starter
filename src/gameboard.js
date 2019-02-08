@@ -1,9 +1,6 @@
 import data from './data.js';
-import domUpdates from './domUpdates.js';
-import Player from './player.js';
-import Clue from './clue.js';
-import Dailydouble from './dailyDouble.js';
 import $ from 'jquery';
+import domUpdates from './domUpdates.js';
 
 class Gameboard {
   constructor(round, categoryList, firstRoundCategories, secondRoundCategories) {
