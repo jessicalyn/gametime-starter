@@ -1,4 +1,4 @@
-import './css/base.css';
+import Gameboard from './gameboard.js';
 import $ from 'jquery';
 
 const domUpdates = {

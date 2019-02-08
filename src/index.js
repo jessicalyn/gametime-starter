@@ -1,20 +1,20 @@
 import './css/base.css';
-
-import Gameboard from './gameboard.js';
-import $ from 'jquery';
+import Clue from './clue.js';
+import Dailydouble from './dailyDouble.js';
+import data from './data.js';
 import domUpdates from './domUpdates.js';
+import Gameboard from './gameboard.js';
+import Player from './player.js';
+import $ from 'jquery';
 
 let game = new Gameboard();
 
-let $startBtn = $('#playBtn');
-let $resetButton = $('#reset-button');
-
-$startBtn.on('click', function(e) {
+$('#playBtn').on('click', function(e) {
   e.preventDefault();
   game.startGame();
   pullNames();
   domUpdates.removeStartScreen();
-});
+})
 
 $('.no-submit').on('submit', function(e) {
   search($('no-reload'));
@@ -28,10 +28,10 @@ $('body').on('click', function(e) {
   } else {
     game.selectCorrectClue(e);
   }
-});
+})
 
-$resetButton.on('click', function() {
-  location.reload();
+$('#reset-button').on('click', function() {
+    location.reload();
 })
 
 function pullNames() {

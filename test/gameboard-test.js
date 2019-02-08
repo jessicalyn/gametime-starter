@@ -7,21 +7,16 @@ chai.use(spies);
 import Gameboard from '../src/gameboard.js';
 import domUpdates from '../src/domUpdates.js';
 
+chai.spy.on(domUpdates, ['startGame', 'assignCategories'], () => true);
+
 describe('Gameboard', function() {
-  var game;
+  let game;
 
   beforeEach(function() {
     game = new Gameboard();
-    chai.spy.on(domUpdates, 'startGame', returns => true);
-    chai.spy.on(domUpdates, 'assignCategories', returns => true)
   });
 
-  afterEach(function() {
-    // chai.spy.restore(domUpdates);
-  });
-
-  it('should instantiate a game', function() {
-    game = new Gameboard;
+  it('should instantiate a new game', function() {
     expect(game).to.be.an.instanceof(Gameboard);
   })
 
@@ -113,9 +108,6 @@ describe('Gameboard', function() {
     expect(game.round).to.equal(2);
   });
 
-  // it('should instantiate a clue when a cluebox is selected', function() {
-
-  // });
 
   it('should be able to switch active players', function() {
     expect(game.activePlayer).to.equal(0);
@@ -135,7 +127,5 @@ describe('Gameboard', function() {
     game.changeRound2();
     expect(game.doubleCount).to.have.length(2);
   });
-
-
 
 });

@@ -1,5 +1,7 @@
 import domUpdates from './domUpdates.js'
 
+// import Gameboard from './gameboard.js' //cannot import
+
 class Clue {
   constructor(answer, categoryId, categoryName, pointValue, question) {
     this.answer = answer;

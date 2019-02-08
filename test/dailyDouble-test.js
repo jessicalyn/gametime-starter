@@ -8,13 +8,13 @@ it('should instantiate a dailydouble', function() {
     expect(dailydouble).to.be.an.instanceof(Dailydouble);
   });
 
-  it('should have a method to create a random number between 1 and 16', function() {
-    var dailydouble = new Dailydouble();
-    let num = dailydouble.randomNumberGenerator();
-    expect(dailydouble.randomNumber).to.not.equal(17);
-  });
+  // it('should have a method to create a random number between 1 and 16', function() {
+  //   var dailydouble = new Dailydouble();
+  //   let num = dailydouble.randomNumberGenerator();
+  //   expect(dailydouble.randomNumber).to.not.equal(17);
+  // });
 
-  it('should be able to show a wager card', function() {
-    //just a dom update?
-  });
+  // it('should be able to show a wager card', function() {
+  //   //just a dom update?
+  // });
 });
