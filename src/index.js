@@ -16,6 +16,11 @@ $startBtn.on('click', function(e) {
   domUpdates.removeStartScreen();
 });
 
+$('.no-submit').on('submit', function(e) {
+  search($('no-reload'));
+  e.preventDefault();
+}, false);
+
 $('body').on('click', function(e) {
   e.preventDefault;
   if (game.round === 3) {

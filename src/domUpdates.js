@@ -24,62 +24,52 @@ const domUpdates = {
   },
 
   removeStartScreen() {
-    let $tableTitle = $('h4');
-    $tableTitle.addClass('add-margin-top')
-    let $inputScreen = $('.input-fields');
-    $inputScreen.hide();
+    $('h4').addClass('add-margin-top');
+    $('.input-fields').hide();
   },
 
   populateClueCard(selectedClue) {
-    let $clueCardCategory = $('.category-reminder');
-    let $clueValue = $('#displayPointVal');
-    let $question = $('#displayQuestion');
     $('#playerAnswer').val('');
-    $clueCardCategory.text(selectedClue.categoryName);
-    $clueValue.text(`For $${selectedClue.pointValue}`);
-    $question.text(selectedClue.question);
+    $('.category-reminder').text(selectedClue.categoryName);
+    $('#displayPointVal').text(`For $${selectedClue.pointValue}`);
+    $('#displayQuestion').text(selectedClue.question);
     $('#rightWrong').hide();
     this.showClueCard();
   },
 
   showClueCard() {
-    let $clueDisplay = $('.question-card');
     $('.answer-btn').show();
-    $clueDisplay.show();
+    $('.question-card').show();
   },
 
   correctFeedback() {
-    let $clueDisplay = $('.question-card');
     $('.answer-btn').hide();
     $('#rightWrong').text('CORRECT!')
       .removeClass('incorrect-feedback')
       .addClass('correct-feedback')
       .show();
-    $clueDisplay.fadeOut(1000, function() {
+    $('.question-card').fadeOut(1000, function() {
       $(this).hide();
     })
   },
 
   incorrectFeedback() {
-    let $clueDisplay = $('.question-card');
     $('.answer-btn').hide();
     $('#rightWrong').text('INCORRECT!')
       .removeClass('correct-feedback')
       .addClass('incorrect-feedback')
       .show();
-    $clueDisplay.fadeOut(1000, function() {
+    $('.question-card').fadeOut(1000, function() {
       $(this).hide();
     })
   },
 
   showWagerCard() {
-    let $wagerCard = $('#dailyDoubleCard');
-    $wagerCard.show();
+    $('#dailyDoubleCard').show();
   },
 
   removeWagerCard() {
-    let $wagerCard = $('#dailyDoubleCard');
-    $wagerCard.hide();
+    $('#dailyDoubleCard').hide();
   },
 
   changePlayerNames(game) {
@@ -126,8 +116,7 @@ const domUpdates = {
   },
 
   reassignPointValue(wagerAmount) {
-    let $clueValue = $('#displayPointVal');
-    $clueValue.text(`For $${wagerAmount}`);
+    $('#displayPointVal').text(`For $${wagerAmount}`);
   }
 }
 

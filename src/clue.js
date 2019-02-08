@@ -17,11 +17,11 @@ class Clue {
     if (selectedClue.answer.toLowerCase() === playerAnswer.toLowerCase()) {
       domUpdates.correctFeedback();
       let answer = "correct";
-      game.updateScore(answer, selectedClue.pointValue);
+      game.playerScore(answer, selectedClue.pointValue);
     } else {
       domUpdates.incorrectFeedback();
       let answer = "wrong";
-      game.updateScore(answer, selectedClue.pointValue);
+      game.playerScore(answer, selectedClue.pointValue);
     }
   }
 }
