@@ -14,3 +14,13 @@ class Player {
 
 
 export default Player;
+
+
+// if (answer === "correct") {
+//       activePlayer.score += score;
+//     } else {
+//       activePlayer.score -= score;
+//     }
+//     domUpdates.updatePlayerScore(this.activePlayer, activePlayer.score);
+//     this.turnCount++;
+//     this.checkTurnCount();
