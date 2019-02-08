@@ -1,7 +1,5 @@
 import domUpdates from './domUpdates.js'
 
-// import Gameboard from './gameboard.js' //cannot import
-
 class Clue {
   constructor(answer, categoryId, categoryName, pointValue, question) {
     this.answer = answer;
@@ -16,10 +14,11 @@ class Clue {
   }
 
   checkAnswer(game, selectedClue, playerAnswer) {
-    console.log("SELECTED CLUE", selectedClue);
+    console.log(selectedClue);
     if (selectedClue.answer.toLowerCase() === playerAnswer.toLowerCase()) {
       domUpdates.correctFeedback();
       let answer = "correct";
+      console.log(game);
       game.playerScore(answer, selectedClue.pointValue);
     } else {
       domUpdates.incorrectFeedback();
