@@ -20,6 +20,8 @@ class Gameboard {
     this.activePlayer = 0;
     this.turnCount = 0;
     this.doubleCount = [];
+    this.currentClue = {};
+    this.currentLocation = 0;
   }
 
   playerScore(answer, score) {
@@ -53,7 +55,7 @@ class Gameboard {
     $('.wager-head').text('Final Jeopardy!');
     // dailydouble.giveDouble(selectedClue);
     clue.showClue(selectedClue);
-    currentClue = selectedClue;
+    this.currentClue = selectedClue;
     domUpdates.populateClueCard(selectedClue);
   }
 
@@ -94,8 +96,8 @@ class Gameboard {
         // dailydouble.giveDouble(selectedClue);
       }
       clue.showClue(selectedClue);
-      currentClue = selectedClue;
-      currentLocation = selectedClueLocation;
+      this.currentClue = selectedClue;
+      this.currentLocation = selectedClueLocation;
     }
     if (e.target.className.includes('wager-btn')) {
       let $wagerAmount = $('#wagerInput').val();
@@ -105,8 +107,8 @@ class Gameboard {
     }
     if (e.target.className.includes('answer-btn')) {
       let $playerAnswer = $('#playerAnswer').val();
-      domUpdates.disableClue(currentLocation);
-      clue.checkAnswer(this, currentClue, $playerAnswer);
+      domUpdates.disableClue(this.currentLocation);
+      clue.checkAnswer(this, this.currentClue, $playerAnswer);
     }
   }
 
@@ -349,8 +351,4 @@ class Gameboard {
 
   
 }
-
-let currentClue = {};
-let currentLocation = 0;
-
 export default Gameboard;
