@@ -16,6 +16,7 @@ class Clue {
   }
 
   checkAnswer(game, selectedClue, playerAnswer) {
+    console.log("SELECTED CLUE", selectedClue);
     if (selectedClue.answer.toLowerCase() === playerAnswer.toLowerCase()) {
       domUpdates.correctFeedback();
       let answer = "correct";
