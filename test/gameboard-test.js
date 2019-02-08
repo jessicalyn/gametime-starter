@@ -35,14 +35,11 @@ describe('Gameboard', function() {
     expect(game.playersArray).to.deep.equal([]);
     expect(game.activePlayer).to.equal(0);
     expect(game.turnCount).to.equal(0);
-    expect(game.doubleCount).to.deep.equal([]);
   });
 
   it('should start a game', function () {
-    expect(game.doubleCount).to.have.length(0);
     game.startGame();
-    expect(game.doubleCount).to.have.length(1);
-  });  //Will not work without dailydouble functionality
+  });
 
   it('should create an array with all clue objects, including category name', function() {
     expect(game.cluesWithCategories).to.have.length(0);
@@ -126,13 +123,6 @@ describe('Gameboard', function() {
     expect(game.activePlayer).to.equal(2);
     game.changePlayerTurn();
     expect(game.activePlayer).to.equal(0);
-  });
-
-  it('should have two dailydoubles in round 2', function() {
-    game.startGame();
-    expect(game.doubleCount).to.have.length(1);
-    game.changeRound2();
-    expect(game.doubleCount).to.have.length(2);
   });
 
 });

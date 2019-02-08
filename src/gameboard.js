@@ -16,7 +16,6 @@ class Gameboard {
     this.playersArray = [];
     this.activePlayer = 0;
     this.turnCount = 0;
-    this.doubleCount = [];
     this.currentClue = {};
     this.currentLocation = 0;
   }
@@ -47,19 +46,14 @@ class Gameboard {
     this.turnCount = 0;
     this.changePlayerTurn()
     let clue = new Clue();
-    let selectedClue = this.finalRoundClue[3];
-    // let dailydouble = new Dailydouble;
+    let selectedClue = this.finalRoundClue[2];
     $('.wager-head').text('Final Jeopardy!');
-    // dailydouble.giveDouble(selectedClue);
     clue.showClue(selectedClue);
     this.currentClue = selectedClue;
     domUpdates.populateClueCard(selectedClue);
   }
 
   startGame() {
-    // let dailydouble = new Dailydouble;
-    // let DD1 = dailydouble.doubleCountGenerator();
-    // this.doubleCount.push(DD1);
     this.collectClues();
     this.assignCategories();
     this.calculateWager();
@@ -87,11 +81,6 @@ class Gameboard {
     let selectedClueLocation = e.target.id;
     let selectedClue = this.roundClues[selectedClueLocation];
     if (e.target.className.includes('available-box')) {
-      if (this.doubleCount[0] === this.turnCount || 
-        this.doubleCount[1] === this.turnCount) {
-        // let dailydouble = new Dailydouble;
-        // dailydouble.giveDouble(selectedClue);
-      }
       clue.showClue(selectedClue);
       this.currentClue = selectedClue;
       this.currentLocation = selectedClueLocation;
@@ -112,19 +101,17 @@ class Gameboard {
   selectFinalJeopardy(e) {
     let clue = new Clue();
     let selectedClue = this.finalRoundClue[2];
-    // let dailydouble = new Dailydouble;
     $('.wager-head').text('Final Jeopardy!')
-    // dailydouble.giveDouble(selectedClue);
     clue.showClue(selectedClue);
-    currentClue = selectedClue;
+    this.currentClue = selectedClue;
     domUpdates.populateClueCard(selectedClue);
     if (e.target.className.includes('answer-btn')) {
       let $playerAnswer = $('#playerAnswer').val();
-      clue.checkAnswer(this, currentClue, $playerAnswer);
+      clue.checkAnswer(this, this.currentClue, $playerAnswer);
     }
     if (e.target.className.includes('wager-btn')) {
       let $wagerAmount = $('#wagerInput').val();
-      currentClue.pointValue = parseInt($wagerAmount);
+      this.currentClue.pointValue = parseInt($wagerAmount);
       domUpdates.reassignPointValue($wagerAmount);
       domUpdates.removeWagerCard();
     }
@@ -300,12 +287,6 @@ class Gameboard {
   }
 
   changeRound2() {
-    // this.doubleCount.pop();
-    // let dailydouble = new Dailydouble;
-    // let DD1 = dailydouble.doubleCountGenerator();
-    // let DD2 = dailydouble.doubleCountGenerator();
-    // this.doubleCount.push(DD1);
-    // this.doubleCount.push(DD2);
     this.roundClues.splice(0, 16);
     this.roundClues.forEach((clue) => {
       clue.pointValue = clue.pointValue * 2;
