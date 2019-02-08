@@ -12,11 +12,11 @@ describe('Player', function() {
 
   beforeEach(function() {
     // player = new Player();
-    // chai.spy.on(domUpdates, 'startGame', returns => true);
+    chai.spy.on(domUpdates, 'updateScore', returns => true);
   });
 
   afterEach(function() {
-    // chai.spy.restore(domUpdates);
+    chai.spy.restore(domUpdates);
   });
 
   it('should instantiate our good friend, player', function() {
@@ -27,17 +27,17 @@ describe('Player', function() {
     player = new Player("Archie", 0, 0, 1, false);
     expect(player.name).to.equal("Archie");
     expect(player.score).to.equal(0);
-    expect(player.wager).to.equal(0);
-    expect(player.playerNum).to.equal(1);
-    expect(player.active).to.equal(false);
+    // expect(player.wager).to.equal(0);
+    // expect(player.playerNum).to.equal(1);
+    // expect(player.active).to.equal(false);
   });
 
   it('should update their score', function() {
-    player = new Player("Archie", 0, 0, 1, false);
+    player = new Player("Archie", 0, 0);
     expect(player.score).to.equal(0);
-    player.updateScore(300);
+    player.updateScore('correct', 300, {name: 'Archie', score: 0 }, 0 );
     expect(player.score).to.equal(300);
-    player.updateScore(-200);
+    player.updateScore('incorrect', -200);
     expect(player.score).to.equal(100);
   })
 

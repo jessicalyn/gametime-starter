@@ -12,7 +12,7 @@ let game = new Gameboard();
 $('#playBtn').on('click', function(e) {
   e.preventDefault();
   game.startGame();
-  pullNames();
+  createPlayers();
   domUpdates.removeStartScreen();
 })
 
@@ -34,9 +34,12 @@ $('#reset-button').on('click', function() {
     location.reload();
 })
 
-function pullNames() {
+function createPlayers() {
   let $playerName1 = $('#playerNameInput1').val();
   let $playerName2 = $('#playerNameInput2').val();
   let $playerName3 = $('#playerNameInput3').val();
-  game.createPlayers(game, $playerName1, $playerName2, $playerName3)
+  let player1 = new Player($playerName1, 0, 0, 1, true);
+  let player2 = new Player($playerName2, 0, 0, 2, false);
+  let player3 = new Player($playerName3, 0, 0, 3, false);
+  game.createPlayersArray(game, player1, player2, player3);
 }

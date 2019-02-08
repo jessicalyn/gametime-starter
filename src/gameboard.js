@@ -2,6 +2,11 @@ import data from './data.js';
 import $ from 'jquery';
 import domUpdates from './domUpdates.js';
 
+//get rid of these
+import Clue from './clue.js';
+// import Dailydouble from './dailyDouble.js'
+//*****************
+
 class Gameboard {
   constructor(round, categoryList) {
     this.round = round || 1;
@@ -19,21 +24,10 @@ class Gameboard {
 
   playerScore(answer, score) {
     let activePlayer = this.playersArray[this.activePlayer];
-    let currentAnswer = answer;
-    let currentPoints = score;
-    // activePlayer.updateScore(activePlayer, currentAnswer, currentPoints);
-    if (answer === "correct") {
-      activePlayer.score += score;
-    } else {
-      activePlayer.score -= score;
-    }
-    domUpdates.updatePlayerScore(this.activePlayer, activePlayer.score);
+    let activePlayerIndex = this.playersArray.indexOf(activePlayer);
+    activePlayer.updateScore(answer, score, activePlayer, activePlayerIndex);
     this.turnCount++;
     this.checkTurnCount();
-  }
-
-  turnCountUp() {
-    this.turnCount++
   }
 
   checkTurnCount() {
@@ -55,28 +49,25 @@ class Gameboard {
     this.changePlayerTurn()
     let clue = new Clue();
     let selectedClue = this.finalRoundClue[3];
-    let dailydouble = new Dailydouble;
+    // let dailydouble = new Dailydouble;
     $('.wager-head').text('Final Jeopardy!');
-    dailydouble.giveDouble(selectedClue);
+    // dailydouble.giveDouble(selectedClue);
     clue.showClue(selectedClue);
     currentClue = selectedClue;
     domUpdates.populateClueCard(selectedClue);
   }
 
   startGame() {
-    let dailydouble = new Dailydouble;
-    let DD1 = dailydouble.doubleCountGenerator();
-    this.doubleCount.push(DD1);
+    // let dailydouble = new Dailydouble;
+    // let DD1 = dailydouble.doubleCountGenerator();
+    // this.doubleCount.push(DD1);
     this.collectClues();
     this.assignCategories();
     this.calculateWager();
     domUpdates.activePlayerHighlight(this.activePlayer);
   }
 
-  createPlayers(game, playerName1, playerName2, playerName3) {
-    let player1 = new Player(playerName1, 0, 0, 1, true);
-    let player2 = new Player(playerName2, 0, 0, 2, false);
-    let player3 = new Player(playerName3, 0, 0, 3, false);
+  createPlayersArray(game, player1, player2, player3) {
     game.playersArray.push(player1);
     game.playersArray.push(player2);
     game.playersArray.push(player3);
@@ -86,7 +77,8 @@ class Gameboard {
   collectClues() {
     let allClues = data.clues;
     this.cluesWithCategories = allClues.map( clue => {
-      clue.categoryName = this.categoryList[clue.categoryId - 1];
+      clue.categoryName = this.categoryList[clue.categoryId - 1]
+        .replace(/([a-z])([A-Z])/g, '$1 $2').toUpperCase();
       return clue;
     });
   }
@@ -98,8 +90,8 @@ class Gameboard {
     if (e.target.className.includes('available-box')) {
       if (this.doubleCount[0] === this.turnCount || 
         this.doubleCount[1] === this.turnCount) {
-        let dailydouble = new Dailydouble;
-        dailydouble.giveDouble(selectedClue);
+        // let dailydouble = new Dailydouble;
+        // dailydouble.giveDouble(selectedClue);
       }
       clue.showClue(selectedClue);
       currentClue = selectedClue;
@@ -121,9 +113,9 @@ class Gameboard {
   selectFinalJeopardy(e) {
     let clue = new Clue();
     let selectedClue = this.finalRoundClue[2];
-    let dailydouble = new Dailydouble;
+    // let dailydouble = new Dailydouble;
     $('.wager-head').text('Final Jeopardy!')
-    dailydouble.giveDouble(selectedClue);
+    // dailydouble.giveDouble(selectedClue);
     clue.showClue(selectedClue);
     currentClue = selectedClue;
     domUpdates.populateClueCard(selectedClue);
@@ -147,25 +139,17 @@ class Gameboard {
       array = array.sort(() => 0.5 - Math.random());
       return array;
     }
-
+    let category10GameClues = []
     let clues10 = this.cluesWithCategories.filter(clue => {
       return clue.categoryId === 10
     });
     randomize(clues10);
-    let category10GameClues = []
-    let point10100 = clues10.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point10200 = clues10.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point10300 = clues10.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point10400 = clues10.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category10GameClues.push(point10100, point10200, point10300, point10400)
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues10.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category10GameClues.push(foundClue);
+    }  
     this.roundClues.push(category10GameClues);
 
     let clues9 = this.cluesWithCategories.filter(clue => {
@@ -173,19 +157,12 @@ class Gameboard {
     });
     randomize(clues9);
     let category9GameClues = []
-    let point9100 = clues9.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point9200 = clues9.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point9300 = clues9.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point9400 = clues9.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category9GameClues.push(point9100, point9200, point9300, point9400)
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues9.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category9GameClues.push(foundClue);
+    }  
     this.roundClues.push(category9GameClues);
 
     let clues8 = this.cluesWithCategories.filter(clue => {
@@ -193,19 +170,12 @@ class Gameboard {
     });
     randomize(clues8);
     let category8GameClues = []
-    let point8100 = clues8.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point8200 = clues8.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point8300 = clues8.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point8400 = clues8.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category8GameClues.push(point8100, point8200, point8300, point8400)
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues8.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category8GameClues.push(foundClue);
+    }  
     this.roundClues.push(category8GameClues);
 
     let clues7 = this.cluesWithCategories.filter(clue => {
@@ -213,19 +183,12 @@ class Gameboard {
     });
     randomize(clues7);
     let category7GameClues = []
-    let point7100 = clues7.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point7200 = clues7.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point7300 = clues7.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point7400 = clues7.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category7GameClues.push(point7100, point7200, point7300, point7400);
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues7.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category7GameClues.push(foundClue);
+    }  
     this.roundClues.push(category7GameClues);
 
     let clues6 = this.cluesWithCategories.filter(clue => {
@@ -233,19 +196,12 @@ class Gameboard {
     });
     randomize(clues6);
     let category6GameClues = []
-    let point6100 = clues6.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point6200 = clues6.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point6300 = clues6.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point6400 = clues6.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category6GameClues.push(point6100, point6200, point6300, point6400);
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues6.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category6GameClues.push(foundClue);
+    }  
     this.roundClues.push(category6GameClues);
 
     let clues5 = this.cluesWithCategories.filter(clue => {
@@ -253,61 +209,38 @@ class Gameboard {
     });
     randomize(clues5);
     let category5GameClues = []
-    let point5100 = clues5.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point5200 = clues5.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point5300 = clues5.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point5400 = clues5.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category5GameClues.push(point5100, point5200, point5300, point5400);
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues5.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category5GameClues.push(foundClue);
+    }  
     this.roundClues.push(category5GameClues);
-
 
     let clues4 = this.cluesWithCategories.filter(clue => {
       return clue.categoryId === 4
     });
     randomize(clues4);
     let category4GameClues = []
-    let point4100 = clues4.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point4200 = clues4.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point4300 = clues4.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point4400 = clues4.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category4GameClues.push(point4100, point4200, point4300, point4400);
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues4.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category4GameClues.push(foundClue);
+    }  
     this.roundClues.push(category4GameClues);
-
 
     let clues3 = this.cluesWithCategories.filter(clue => {
       return clue.categoryId === 3
     });
     randomize(clues3);
     let category3GameClues = []
-    let point3100 = clues3.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point3200 = clues3.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point3300 = clues3.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point3400 = clues3.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category3GameClues.push(point3100, point3200, point3300, point3400)
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues3.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category3GameClues.push(foundClue);
+    }  
     this.roundClues.push(category3GameClues);
 
     this.roundClues = this.roundClues.flat();
@@ -317,19 +250,12 @@ class Gameboard {
     });
     randomize(clues2);
     let category2GameClues = []
-    let point2100 = clues2.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point2200 = clues2.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point2300 = clues2.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point2400 = clues2.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category2GameClues.push(point2100, point2200, point2300, point2400);
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues2.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category2GameClues.push(foundClue);
+    }  
     this.finalRoundClue.push(category2GameClues);
 
     this.finalRoundClue = this.finalRoundClue.flat();
@@ -339,19 +265,12 @@ class Gameboard {
     });
     randomize(clues1);
     let category1GameClues = []
-    let point1100 = clues1.filter(clue => {
-      return clue.pointValue === 100
-    }).shift()
-    let point1200 = clues1.filter(clue => {
-      return clue.pointValue === 200
-    }).shift()
-    let point1300 = clues1.filter(clue => {
-      return clue.pointValue === 300
-    }).shift()
-    let point1400 = clues1.filter(clue => {
-      return clue.pointValue === 400
-    }).shift()
-    category1GameClues.push(point1100, point1200, point1300, point1400)
+    for (var i = 1; i < 5; i++) {
+      let foundClue = clues1.find(function(el) {
+        return el.pointValue === 100 * i;
+      });
+       category1GameClues.push(foundClue);
+    }  
 
     this.roundCategories = [this.roundClues[0].categoryName,
       this.roundClues[4].categoryName,
@@ -382,12 +301,12 @@ class Gameboard {
   }
 
   changeRound2() {
-    this.doubleCount.pop();
-    let dailydouble = new Dailydouble;
-    let DD1 = dailydouble.doubleCountGenerator();
-    let DD2 = dailydouble.doubleCountGenerator();
-    this.doubleCount.push(DD1);
-    this.doubleCount.push(DD2);
+    // this.doubleCount.pop();
+    // let dailydouble = new Dailydouble;
+    // let DD1 = dailydouble.doubleCountGenerator();
+    // let DD2 = dailydouble.doubleCountGenerator();
+    // this.doubleCount.push(DD1);
+    // this.doubleCount.push(DD2);
     this.roundClues.splice(0, 16);
     this.roundClues.forEach((clue) => {
       clue.pointValue = clue.pointValue * 2;
@@ -397,6 +316,7 @@ class Gameboard {
       this.roundClues[4].categoryName, 
       this.roundClues[8].categoryName, 
       this.roundClues[12].categoryName];
+    domUpdates.roundTwoDisplay();  
     domUpdates.labelCategories([this.roundCategories]);
     domUpdates.repopulateClues();
     this.turnCount = 0
