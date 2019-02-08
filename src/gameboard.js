@@ -2,10 +2,7 @@ import data from './data.js';
 import $ from 'jquery';
 import domUpdates from './domUpdates.js';
 
-//get rid of these
 import Clue from './clue.js';
-// import Dailydouble from './dailyDouble.js'
-//*****************
 
 class Gameboard {
   constructor(round, categoryList) {
