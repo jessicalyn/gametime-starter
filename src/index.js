@@ -38,5 +38,5 @@ function pullNames() {
   let $playerName1 = $('#playerNameInput1').val();
   let $playerName2 = $('#playerNameInput2').val();
   let $playerName3 = $('#playerNameInput3').val();
-  game.createPlayers(game, $playerName1, $playerName2, $playerName3)
+  game.createPlayers(game, $playerName1, $playerName2, $playerName3);
 }

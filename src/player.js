@@ -1,11 +1,19 @@
+import domUpdates from './domUpdates.js'
+
 class Player {
   constructor(name, score, wager) {
     this.name = name;
     this.score = score;
   }
 
-  updateScore(resultScore) {
-    this.score += resultScore;
+  updateScore(answer, score, activePlayer, activePlayerIndex) {
+    if (answer === "correct") {
+      activePlayer.score += score;
+    } else {
+      activePlayer.score -= score;
+      score = activePlayer.score;
+    }
+    domUpdates.updatePlayerScore(this.activePlayer, score, activePlayerIndex);
   }
 
   wagerRange() {

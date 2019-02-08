@@ -2,6 +2,12 @@ import data from './data.js';
 import $ from 'jquery';
 import domUpdates from './domUpdates.js';
 
+//get rid of these
+import Clue from './clue.js';
+import Player from './player.js';
+// import Dailydouble from './dailyDouble.js'
+//*****************
+
 class Gameboard {
   constructor(round, categoryList) {
     this.round = round || 1;
@@ -19,21 +25,10 @@ class Gameboard {
 
   playerScore(answer, score) {
     let activePlayer = this.playersArray[this.activePlayer];
-    let currentAnswer = answer;
-    let currentPoints = score;
-    // activePlayer.updateScore(activePlayer, currentAnswer, currentPoints);
-    if (answer === "correct") {
-      activePlayer.score += score;
-    } else {
-      activePlayer.score -= score;
-    }
-    domUpdates.updatePlayerScore(this.activePlayer, activePlayer.score);
+    let activePlayerIndex = this.playersArray.indexOf(activePlayer);
+    activePlayer.updateScore(answer, score, activePlayer, activePlayerIndex);
     this.turnCount++;
     this.checkTurnCount();
-  }
-
-  turnCountUp() {
-    this.turnCount++
   }
 
   checkTurnCount() {
@@ -55,18 +50,18 @@ class Gameboard {
     this.changePlayerTurn()
     let clue = new Clue();
     let selectedClue = this.finalRoundClue[3];
-    let dailydouble = new Dailydouble;
+    // let dailydouble = new Dailydouble;
     $('.wager-head').text('Final Jeopardy!');
-    dailydouble.giveDouble(selectedClue);
+    // dailydouble.giveDouble(selectedClue);
     clue.showClue(selectedClue);
     currentClue = selectedClue;
     domUpdates.populateClueCard(selectedClue);
   }
 
   startGame() {
-    let dailydouble = new Dailydouble;
-    let DD1 = dailydouble.doubleCountGenerator();
-    this.doubleCount.push(DD1);
+    // let dailydouble = new Dailydouble;
+    // let DD1 = dailydouble.doubleCountGenerator();
+    // this.doubleCount.push(DD1);
     this.collectClues();
     this.assignCategories();
     this.calculateWager();
@@ -98,8 +93,8 @@ class Gameboard {
     if (e.target.className.includes('available-box')) {
       if (this.doubleCount[0] === this.turnCount || 
         this.doubleCount[1] === this.turnCount) {
-        let dailydouble = new Dailydouble;
-        dailydouble.giveDouble(selectedClue);
+        // let dailydouble = new Dailydouble;
+        // dailydouble.giveDouble(selectedClue);
       }
       clue.showClue(selectedClue);
       currentClue = selectedClue;
@@ -121,9 +116,9 @@ class Gameboard {
   selectFinalJeopardy(e) {
     let clue = new Clue();
     let selectedClue = this.finalRoundClue[2];
-    let dailydouble = new Dailydouble;
+    // let dailydouble = new Dailydouble;
     $('.wager-head').text('Final Jeopardy!')
-    dailydouble.giveDouble(selectedClue);
+    // dailydouble.giveDouble(selectedClue);
     clue.showClue(selectedClue);
     currentClue = selectedClue;
     domUpdates.populateClueCard(selectedClue);
@@ -383,9 +378,9 @@ class Gameboard {
 
   changeRound2() {
     this.doubleCount.pop();
-    let dailydouble = new Dailydouble;
-    let DD1 = dailydouble.doubleCountGenerator();
-    let DD2 = dailydouble.doubleCountGenerator();
+    // let dailydouble = new Dailydouble;
+    // let DD1 = dailydouble.doubleCountGenerator();
+    // let DD2 = dailydouble.doubleCountGenerator();
     this.doubleCount.push(DD1);
     this.doubleCount.push(DD2);
     this.roundClues.splice(0, 16);

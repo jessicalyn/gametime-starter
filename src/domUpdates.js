@@ -103,8 +103,8 @@ const domUpdates = {
     $(`#avatar${activePlayerNum}`).css("background-color", "#853c1e")
   },
 
-  updatePlayerScore(activePlayer, score) {
-    let $playerScore = $(`#scoreBox${activePlayer}`);
+  updatePlayerScore(activePlayer, score, activePlayerIndex) {
+    let $playerScore = $(`#scoreBox${activePlayerIndex}`);
     $playerScore.text(`$${score}`);
   },
 
