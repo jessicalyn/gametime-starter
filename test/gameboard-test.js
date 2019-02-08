@@ -12,7 +12,7 @@ describe('Gameboard', function() {
   let game;
 
   beforeEach(function() {
-    chai.spy.on(domUpdates, ['startGame', 'assignCategories', 'activePlayerHighlight', 'labelCategories', 'changePlayerNames', 'deactivatePlayerHighlight'], () => true);
+    chai.spy.on(domUpdates, ['startGame', 'assignCategories', 'activePlayerHighlight', 'changePlayerNames', 'deactivatePlayerHighlight', 'repopulateClues', 'labelCategories', 'roundTwoDisplay', 'setClueBoxPoints'], () => true);
     game = new Gameboard();
   });
 
@@ -112,7 +112,7 @@ describe('Gameboard', function() {
 
   it('should check rounds and change at the appropriate turn count', function() {
     expect(game.round).to.equal(1);
-    game.turnCount = 16;
+    game.turnCount = 3;
     game.checkTurnCount();
     expect(game.round).to.equal(2);
   });
