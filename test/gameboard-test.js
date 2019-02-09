@@ -6,13 +6,13 @@ chai.use(spies);
 
 import Gameboard from '../src/gameboard.js';
 import domUpdates from '../src/domUpdates.js';
-
+import Player from '../src/player.js';
 
 describe('Gameboard', function() {
   let game;
 
   beforeEach(function() {
-    chai.spy.on(domUpdates, ['startGame', 'assignCategories', 'activePlayerHighlight', 'labelCategories', 'changePlayerNames'], () => true);
+    chai.spy.on(domUpdates, ['startGame', 'assignCategories', 'activePlayerHighlight', 'changePlayerNames', 'deactivatePlayerHighlight', 'repopulateClues', 'labelCategories', 'roundTwoDisplay', 'setClueBoxPoints'], () => true);
     game = new Gameboard();
   });
 
@@ -48,9 +48,10 @@ describe('Gameboard', function() {
   });
 
   it('should create 2 arrays, one with playable categories, and one with the final round category', function() {
+    game.collectClues();
     expect(game.roundCategories).to.deep.equal([]);
     // expect(game.finalRoundCategory).to.deep.equal([]);
-    game.assignCategories();
+    game.assignCategories(game.cluesWithCategories);
     expect(game.roundCategories).to.have.length(4);
     // expect(game.finalRoundCategory).to.have.length(1);
   });
@@ -65,55 +66,57 @@ describe('Gameboard', function() {
 
   it('should create an array of the instantiated players', function() {
     expect(game.playersArray).to.deep.equal([]);
-    player1 = { name: 'Joe' };
-    player2 = { name: 'Archie' };
-    player3 = { name: 'Duder' };
+    let player1 = { name: 'Joe', score: 100 };
+    let player2 = { name: 'Archie', score: 200 };
+    let player3 = { name: 'Duder', score: 300 };
     game.createPlayersArray(game, player1, player2, player3);
     expect(game.playersArray).to.have.length(3);
   });
 
-  // it('should update the active players score', function() {
-  //   game.updateScore();
-  // });
-
   it('should increase the turn count after a player answers', function() {
+    let player1 = { name: 'Joe', score: 100 };
+    let player2 = { name: 'Archie', score: 200 };
+    let player3 = { name: 'Duder', score: 300 };
+    game.createPlayersArray(game, player1, player2, player3);    
     expect(game.turnCount).to.equal(0);
-    game.updateScore();
+    game.playerScore('correct', 100);
     expect(game.turnCount).to.equal(1);
-    game.updateScore();
+    game.playerScore('correct', 100);
     expect(game.turnCount).to.equal(2);
   });
 
   it('should increase its round when turnCount reaches 16', function() {
+    let activePlayer = { name: 'Joe', score: 0 };
     expect(game.round).to.equal(1);
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
-    game.updateScore();
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
+    game.playerScore('correct', 100);
     expect(game.round).to.equal(2);
   });
 
   it('should check rounds and change at the appropriate turn count', function() {
     expect(game.round).to.equal(1);
-    game.turnCount = 16;
+    game.turnCount = 3;
     game.checkTurnCount();
     expect(game.round).to.equal(2);
   });
 
 
   it('should be able to switch active players', function() {
+    let activePlayer = { name: 'Archie', score: 200 };
     expect(game.activePlayer).to.equal(0);
     game.startGame();
     expect(game.activePlayer).to.equal(0);
@@ -125,4 +128,9 @@ describe('Gameboard', function() {
     expect(game.activePlayer).to.equal(0);
   });
 
+  it('should reset turn count when the round changes', function() {
+    expect(game.round).to.equal(1);
+    game.changeRound2();
+    expect(game.round).to.equal(2);
+  })
 });
